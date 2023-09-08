@@ -95,33 +95,38 @@ for dataset in data:
     dataset['Title'] = dataset['Title'].replace('Mlle', 'Miss')
     dataset['Title'] = dataset['Title'].replace('Ms', 'Miss')
     dataset['Title'] = dataset['Title'].replace('Mme', 'Mrs')
-    # convert titles into numbers
+    # convert titles into int
     dataset['Title'] = dataset['Title'].map(titles)
-    # filling NaN with 0, to get safe
+    # filling NaN with 0. Just in case.
     dataset['Title'] = dataset['Title'].fillna(0)
 train = train.drop(['Name'], axis=1)
 test = test.drop(['Name'], axis=1)
 
-print(train)
+# print(train)
 
 # Training the algorithm
 X_train = train.drop("Survived", axis=1)
 Y_train = train["Survived"]
 X_test = test.drop("PassengerId", axis=1).copy()
-
+submission = test['PassengerId'].copy()
 random_forest = RandomForestClassifier(n_estimators=100)
 random_forest.fit(X_train, Y_train)
 
 Y_prediction = random_forest.predict(X_test)
 
+submission = pd.DataFrame(data={'PassengerId': submission})
+submission['Survived'] = pd.DataFrame(data={'Survived': Y_prediction})
+
 random_forest.score(X_train, Y_train)
 acc_random_forest = round(random_forest.score(X_train, Y_train) * 100, 2)
 print(acc_random_forest)
 
+# Write outcome to csv file
+submission.to_csv('gender_submission.csv', index=False)
+
+
 # Init figure and axis objects
 f, ax = plt.subplots()
-
-
 
 # Plot first visualization of survivors
 train['Survived'].value_counts().plot.pie(
