@@ -122,7 +122,7 @@ acc_random_forest = round(random_forest.score(X_train, Y_train) * 100, 2)
 print(acc_random_forest)
 
 # Write outcome to csv file
-submission.to_csv('gender_submission.csv', index=False)
+submission.to_csv('submission.csv', index=False)
 
 
 # Init figure and axis objects
