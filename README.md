@@ -35,3 +35,9 @@ For each in the test set, you must predict a 0 or 1 value for the variable.
 
 Your score is the percentage of passengers you correctly predict. This is known as accuracy.
 
+## Leaderboard
+| Scores     |
+|------------|
+| 1. 72,248% |
+| 2. ...     |
+| 3. ...     |
